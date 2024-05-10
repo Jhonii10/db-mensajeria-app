@@ -1,7 +1,4 @@
-import pg from 'pg';
-
-const { Pool } = pg;
-
+const { Pool } = require('pg')
 // Configuración de la conexión a la base de datos
 
 const pool = new Pool({
