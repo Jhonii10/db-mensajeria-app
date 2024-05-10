@@ -41,8 +41,24 @@ const findUserByEmail = async (email)=>{
       return userExists.rows.length > 0;
 }
 
+const getUserbyEmail = async(email)=>{
+    try {
+        const user = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+        return user.rows[0];
+      } catch (error) {
+        console.error('Error fetching user:', error);
+        throw new Error('Hubo un error al buscar el usuario');
+      }
+}
+
+const comparePasswords = async (password , hashedPassword)=>{
+    return await bcrypt.compare(password, hashedPassword);
+}
+
 module.exports = {
     createUser,
-    findUserByEmail
+    findUserByEmail,
+    getUserbyEmail,
+    comparePasswords
 }
 
