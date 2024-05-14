@@ -12,6 +12,18 @@ const allCustomer = async()=>{
 }
 
 
+const idCustomer = async (id)=>{
+    try {
+        const result = await pool.query('SELECT * FROM cliente WHERE cedula = $1',[id])
+        const data = result.rows[0]
+        return data;
+    } catch (error) {
+        throw new Error(error.message)
+    }
+}
+
+
 module.exports ={
-    allCustomer
+    allCustomer,
+    idCustomer
 }
