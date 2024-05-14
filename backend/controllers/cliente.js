@@ -1,4 +1,32 @@
-const { allCustomer, idCustomer } = require("../models/cliente")
+const { allCustomer, idCustomer, createNewCustomer,  } = require("../models/cliente")
+
+const createCustomer = async (req, res, next)=>{
+
+   const { cedula, nombre, direccion, celular, email} = req.body;
+
+
+   if ( !cedula || !nombre || !direccion || !celular || !email) {
+    return res.status(400).send('Faltan campos');
+   }
+  
+   const id_cliente = Number(cedula)
+
+   try {
+    const clientID = await idCustomer(cedula);
+    if (clientID) {
+        res.status(400).send('El cliente ya está registrado');
+    }
+    await createNewCustomer(id_cliente,cedula, nombre, direccion, celular, email);
+    res.status(201).json({
+        status:true,
+        mensaje: `Cliente ${nombre} creado correctamente`,
+    });
+
+   } catch (error) {
+    console.error('Error registering user:', error);
+    res.status(500).send('Hubo un error intentando crear el cliente');
+   } 
+}
 
 const customer =async (req,res,next)=>{
     try {
@@ -28,8 +56,11 @@ const getCustomerId = async(req, res, next )=>{
 }
 
 
+
+
 module.exports = {
     customer,
+    createCustomer,
     getCustomerId,
 
 };
