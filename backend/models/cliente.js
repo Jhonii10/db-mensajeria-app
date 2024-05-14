@@ -22,8 +22,20 @@ const idCustomer = async (id)=>{
     }
 }
 
+const createNewCustomer = async (id_cliente,cedula, nombre, direccion, celular, email)=>{
+    const query = 'INSERT INTO cliente (id_cliente, cedula, nombre, direccion, celular, email) VALUES ($1, $2, $3,$4,$5,$6)';
+    const values = [id_cliente, cedula, nombre, direccion, celular, email];
+    try {
+        await pool.query(query, values);
+    } catch (error) {
+        throw new Error(error.message)
+    }
+    
+}
+
 
 module.exports ={
     allCustomer,
-    idCustomer
+    idCustomer,
+    createNewCustomer
 }
