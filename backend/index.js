@@ -3,6 +3,7 @@ const logger = require("morgan");
 require('dotenv').config()
 const cors = require('cors')
 const userRoutes = require("./routes/userRoutes")
+const clientsRoutes = require('./routes/clientsRoutes')
 
 // crear apliacion en express
 const app = express();
@@ -15,6 +16,7 @@ app.use(cors())
 
 // Endpoints
 app.use('/api/auth', userRoutes)
+app.use('/api/clients',clientsRoutes)
 
 // Iniciar servidor
 app.listen(process.env.PORT || 3000, ()=>{
