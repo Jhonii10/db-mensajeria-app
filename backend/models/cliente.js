@@ -33,9 +33,24 @@ const createNewCustomer = async (id_cliente,cedula, nombre, direccion, celular, 
     
 }
 
+const modifyCustomer = async(id_cliente, cedula, nombre, direccion, celular, email)  => {
+    console.log(id_cliente, cedula, nombre, direccion, celular, email);
+    const query = 'UPDATE cliente SET nombre = $3, direccion = $4, celular = $5, email = $6 WHERE id_cliente =$1 OR cedula = $2 ';
+    const values = [id_cliente,cedula, nombre, direccion, celular, email];
+
+    try {
+        const result = await pool.query(query, values);
+        return result; 
+    } catch (error) {
+        console.error('Error updating customer:', error.message);
+        throw new Error('Error updating customer: ' + error.message);
+    }
+}
+
 
 module.exports ={
     allCustomer,
     idCustomer,
-    createNewCustomer
+    createNewCustomer,
+    modifyCustomer
 }
