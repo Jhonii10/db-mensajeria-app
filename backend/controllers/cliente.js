@@ -1,4 +1,4 @@
-const { allCustomer, idCustomer, createNewCustomer, modifyCustomer,  } = require("../models/cliente")
+const { allCustomer, idCustomer, createNewCustomer, modifyCustomer, deleteByID,  } = require("../models/cliente")
 
 const createCustomer = async (req, res, next)=>{
 
@@ -87,11 +87,36 @@ const editCustomer = async (req, res, next) => {
     }
 }
 
+const deleteCustomer = async (req, res) => {
+    const { id: cedula } = req.params;
+    
+
+    try {
+        // Llamar al método para eliminar el cliente por su cedula
+        const result = await deleteByID(cedula);
+
+        // Verificar si se eliminó el cliente
+        if (result.rowCount === 0) {
+            return res.status(404).send('Cliente no encontrado para eliminar');
+        }
+
+        // Si se encontró y se eliminó el cliente, devolver un mensaje de éxito
+        return res.status(200).json({
+            status: true,
+            mensaje: `Cliente con cédula ${cedula} eliminado correctamente`,
+        });
+    } catch (error) {
+        console.error('Error deleting customer:', error.message);
+        return res.status(500).send('Hubo un error intentando eliminar el cliente');
+    }
+};
+
 
 module.exports = {
     customer,
     createCustomer,
     getCustomerId,
-    editCustomer
+    editCustomer,
+    deleteCustomer
 
 };

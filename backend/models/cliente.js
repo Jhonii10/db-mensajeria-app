@@ -48,9 +48,32 @@ const modifyCustomer = async(id_cliente, cedula, nombre, direccion, celular, ema
 }
 
 
+const deleteByID = async (id) => {
+
+    try {
+        await Promise.all([
+            pool.query('DELETE FROM servicio WHERE id_cliente = $1', [id]),
+            pool.query('DELETE FROM sucursal WHERE id_cliente = $1', [id]),
+            pool.query('DELETE FROM usuario WHERE id_cliente = $1', [id])
+        ]);
+
+        const query = 'DELETE FROM cliente WHERE id_cliente = $1';
+        const values = [id];
+        
+        const result = await pool.query(query, values);
+        return result;
+    } catch (error) {
+        console.log(error.message);
+        throw new Error('Error al eliminar el cliente');
+    }
+};
+
+
+
 module.exports ={
     allCustomer,
     idCustomer,
     createNewCustomer,
-    modifyCustomer
+    modifyCustomer,
+    deleteByID
 }
