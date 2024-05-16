@@ -5,23 +5,26 @@ const
   findUserByEmail, 
   createUser, 
   getUserbyEmail,
-  comparePasswords
+  comparePasswords,
+  allUsers
 } = require("../models/usuario");
 
 
 const register = async (req, res, next)=>{
-    const {name, email, password} = req.body;
-    if (!name || !email || !password) {
+    const {id_usuario, username, contraseña, email, celular, direccion, id_cliente,nombre} = req.body;
+
+    if (!id_usuario || !username || !contraseña || !email || !celular || !direccion || !id_cliente || !nombre ) {
         return res.status(400).send('Faltan campos');
       }
   
       try {
         const userExists = await findUserByEmail(email);
+        console.log(userExists);
         if (userExists) {
           return res.status(400).send('El usuario ya está registrado');
         }
   
-        const result = await createUser(name, email, password);
+        const result = await createUser(id_usuario, username, contraseña, email, celular, direccion, id_cliente,nombre);
         res.status(201).json(result);
       } catch (error) {
         console.error('Error registering user:', error);
@@ -85,8 +88,19 @@ const revalidarToken = async (req, res = response ) => {
     })
 }
 
+const users = async(req, res, next)=>{
+  try {
+    const listBranchs = await allUsers();
+    res.status(200).json(listBranchs)
+} catch (error) {
+    console.error("Error al obtener los usuario:", error);
+    res.status(500).json({ error: 'Error al obtener los usuarios' });
+}
+}
+
 module.exports = {
     register,
     login,
-    revalidarToken
+    revalidarToken,
+    users
 }
