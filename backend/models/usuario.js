@@ -39,9 +39,9 @@ const findUserByEmail = async (email)=>{
       return userExists.rows.length > 0;
 }
 
-const getUserbyEmail = async(email)=>{
+const getUserbyEmailOrUserName = async(username)=>{
     try {
-        const user = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+        const user = await pool.query('SELECT * FROM usuario WHERE email = $1 or username = $1', [username]);
         return user.rows[0];
       } catch (error) {
         console.error('Error fetching user:', error);
@@ -66,7 +66,7 @@ const allUsers = async()=>{
 module.exports = {
     createUser,
     findUserByEmail,
-    getUserbyEmail,
+    getUserbyEmailOrUserName,
     comparePasswords,
     allUsers
 }
