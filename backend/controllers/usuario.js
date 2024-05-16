@@ -6,7 +6,8 @@ const
   createUser, 
   getUserbyEmail,
   comparePasswords,
-  allUsers
+  allUsers,
+  getUserbyEmailOrUserName
 } = require("../models/usuario");
 
 
@@ -34,33 +35,35 @@ const register = async (req, res, next)=>{
 
 
 const login = async (req , res , next)=>{
-    const {email , password} = req.body;
+    const {username, contraseña} = req.body;
 
-    if (!email || !password) {
-        return res.status(400).json({ message: 'Por favor ingresa tu correo y contraseña' });
+    if (!username || !contraseña) {
+        return res.status(400).json({ message: 'Por favor ingresa tu usuario y contraseña' });
     }
 
    
     try {
 
-        const user = await getUserbyEmail(email);
+        const user = await getUserbyEmailOrUserName(username);  
+        
         if (!user) {
-            return res.status(401).json({ message: 'Correo electrónico o contraseña incorrectos', status: false });
+            return res.status(401).json({ message: 'Nombre de usuario o contraseña incorrectos', status: false });
           }
 
-        const validPassword = await comparePasswords(password, user.password);
+        const validPassword = await comparePasswords(contraseña, user.contraseña);
+
 
         if (!validPassword) {
-            return res.status(401).json({ message: 'Contraseña es incorrecta', status: false });
+            return res.status(401).json({ message: 'Contraseña incorrecta', status: false });
           }
 
-          const token = await generarJWT(user.id , user.email)
+          const token = await generarJWT(user.id_usuario , user.email)
 
           res.json({
             status: true,
             user: {
-              id: user.id,
-              name: user.name,
+              id: user.id_usuario,
+              username: user.username,
               email: user.email,
             },
             token,
