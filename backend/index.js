@@ -4,6 +4,7 @@ require('dotenv').config()
 const cors = require('cors')
 const userRoutes = require("./routes/userRoutes")
 const clientsRoutes = require('./routes/clientsRoutes')
+const branchsRoute = require('./routes/branchRoutes')
 
 // crear apliacion en express
 const app = express();
@@ -17,6 +18,7 @@ app.use(cors())
 // Endpoints
 app.use('/api/auth', userRoutes)
 app.use('/api/clients',clientsRoutes)
+app.use('/api/branchs',branchsRoute)
 
 // Iniciar servidor
 app.listen(process.env.PORT || 3000, ()=>{
