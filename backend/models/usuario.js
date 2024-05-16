@@ -1,41 +1,39 @@
 const bcrypt = require('bcrypt');
-const { v4: uuidv4 } = require('uuid');
 const pool = require('../database/config');
 const { generarJWT } = require('../helpers/jwt');
 
-const createUser =async (name, email ,password)=>{
+const createUser =async (id_usuario, username, contraseña, email, celular, direccion, id_cliente,nombre)=>{
 
-    const id = uuidv4();
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(contraseña, 10);
 
     try {
       await pool.query(
-        `INSERT INTO users (id, name, email, password) 
-         VALUES ($1, $2, $3, $4)`,
-        [id, name, email, hashedPassword]
+        `INSERT INTO usuario (id_usuario, username, contraseña, email, celular, direccion, id_cliente,nombre) 
+         VALUES ($1, $2, $3, $4, $5, $6, $7,$8)`,
+        [id_usuario, username, hashedPassword, email, celular, direccion, id_cliente,nombre ]
       );
 
-     const token = await generarJWT(id , email)
+     const token = await generarJWT(id_usuario , username)
 
       return { 
         success: true,
         message: 'Usuario creado correctamente',
         user:{
-            id,
-            name,
-            email
+            id_usuario,
+            username,
+            email,
         },
         token
       };
     } catch (error) {
-      console.error('Error creating user:', error);
+      console.error('Error creando el usuario:', error);
       throw new Error('Hubo un error intentando crear el usuario');
     }
 
 }
 
 const findUserByEmail = async (email)=>{
-    const userExists = await pool.query(`SELECT * FROM users WHERE email = $1`, [
+    const userExists = await pool.query(`SELECT * FROM usuario WHERE email = $1`, [
         email,
       ]);
       return userExists.rows.length > 0;
@@ -55,10 +53,21 @@ const comparePasswords = async (password , hashedPassword)=>{
     return await bcrypt.compare(password, hashedPassword);
 }
 
+const allUsers = async()=>{
+  try {
+      const result = await pool.query('SELECT * FROM usuario');
+      const data = result.rows;
+      return data
+  } catch (error) {
+      throw new Error(error.message)
+  }
+}
+
 module.exports = {
     createUser,
     findUserByEmail,
     getUserbyEmail,
-    comparePasswords
+    comparePasswords,
+    allUsers
 }
 
