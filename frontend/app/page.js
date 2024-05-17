@@ -14,10 +14,10 @@
                Estamos aquí para hacer que tus envíos sean más fáciles y rápidos que nunca.
             </p>
             <Link
-              href="#"
+              href="/login"
               className="flex items-center gap-5 self-start rounded-lg bg-black px-6 py-3 text-sm font-medium text-white transition-colors  md:text-base"
             >
-              <span>Login</span> 
+              <span>Ingresar</span> 
             </Link>
           </div>
           <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12 bg-gray-50 rounded-lg ">
