@@ -1,4 +1,5 @@
-import React from 'react';
+'use client'
+import React, { useEffect, useState } from 'react';
 import { Quicksand } from "next/font/google";
 import {
     AtSymbolIcon,
@@ -7,6 +8,8 @@ import {
   } from '@heroicons/react/24/outline';
 import Button from './button';
 import Link from 'next/link';
+import UseAuthStore from '@/app/hooks/useAuthStore';
+import toast from 'react-hot-toast';
 
 const quicksand = Quicksand({ subsets: ["latin"] });
 
@@ -20,8 +23,36 @@ function LoginButton() {
   }
 
 const LoginForm = () => {
+
+    const {errormessage, startLogin}= UseAuthStore();
+
+    const [formData, setFormData] = useState({
+        username: '',
+        contraseña: ''
+    });
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        startLogin(formData)
+        
+    };
+
+
+    useEffect(() => {
+        if (errormessage !== undefined) {
+            toast.error(errormessage)
+        }
+    }, [errormessage]);
+
     return (
-        <form  className="space-y-3">
+        <form onSubmit={handleSubmit} className="space-y-3">
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
         <h1 className={`${quicksand.className} mb-3 text-2xl text-center font-bold`}>
             Iniciar sesión
@@ -39,8 +70,10 @@ const LoginForm = () => {
                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                 id="email"
                 type="email"
-                name="email"
+                name="username"
                 placeholder="Introduce tu email o username"
+                value={formData.username} 
+                onChange={handleChange} 
                 required
               />
               <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
@@ -58,9 +91,11 @@ const LoginForm = () => {
                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                 id="password"
                 type="password"
-                name="password"
+                name="contraseña"
                 placeholder="Ingrese su contraseña"
                 required
+                value={formData.contraseña} 
+                onChange={handleChange} 
                 minLength={6}
               />
               <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
