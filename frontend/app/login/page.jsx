@@ -1,12 +1,11 @@
+
 import Link from "next/link";
 import LoginForm from "../ui/login/loginForm";
 import { ArrowLeftCircleIcon } from "@heroicons/react/24/outline";
-import { Toaster } from "react-hot-toast";
+
 
  
 export default function LoginPage() {
-
-
 
   return (
     <main className="flex items-center justify-center md:h-screen ">

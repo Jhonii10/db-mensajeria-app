@@ -12,11 +12,11 @@ export const metadata = {
   description: "Mensajeria app with using next.js",
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children,}) {
   return (
     <html lang="en">
       <body className={quicksand.className}>
-      <StoreProvider>
+      <StoreProvider >
       <Toaster
         position="top-right"
         reverseOrder={false}

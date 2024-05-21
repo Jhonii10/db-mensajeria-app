@@ -4,7 +4,7 @@ import mensajeríaApi from '../api/mensajeriaApi';
 import { onLogin, onLogout ,clearErrorMessage } from '../store/auth/authSlice';
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast';
-
+import Cookies from 'js-cookie';
 
     const UseAuthStore = () => {
 
@@ -19,13 +19,15 @@ import toast from 'react-hot-toast';
                 
                 const {data} = await mensajeríaApi.post('/auth/login',{username,contraseña})
                 localStorage.setItem('token',data.token)
+                Cookies.set ( 'token' , data.token )
                 localStorage.setItem('token-init-date',new Date().getTime())
                 dispatch(onLogin({name: data.user.username , uid: data.user.id}))
-                // router.push('/dashboard')
+                router.push('/dashboard')
                 toast.success('¡Inicio de sesión exitoso!');
             } catch (error) {
                 console.log(error)
                     dispatch(onLogout('credenciales incorrectas'))
+                    Cookies.remove('token')
                     setTimeout(() => {
                         dispatch(clearErrorMessage());
                     }, 100);
@@ -34,6 +36,12 @@ import toast from 'react-hot-toast';
         
         }
 
+        const startLogout = ()=>{
+            localStorage.clear();
+            Cookies.remove('token')
+            router.push('/')
+            dispatch(onLogout())
+        }
 
         return {
             // propiedades
@@ -42,7 +50,8 @@ import toast from 'react-hot-toast';
             errormessage,
 
             // metodos
-            startLogin
+            startLogin,
+            startLogout
         };
     }
 
