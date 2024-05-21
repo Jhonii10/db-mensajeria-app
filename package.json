@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "auth-provider": "^0.6.2"
+  }
+}
