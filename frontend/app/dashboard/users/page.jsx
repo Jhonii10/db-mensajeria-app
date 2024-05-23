@@ -1,5 +1,6 @@
 import Search from '@/app/ui/components/search'
 import CreateUser from '@/app/ui/dashboard/users/buttons'
+import Table from '@/app/ui/dashboard/users/table'
 import { quicksand } from '@/app/ui/font/quicksand'
 import React from 'react'
 
@@ -13,7 +14,7 @@ export default function Page() {
         <Search placeholder={'Buscar usuario...'}/>
         <CreateUser/>
       </div>
-       {/* table */}
+       <Table/>
       <div className="mt-5 flex w-full justify-center">
         {/* pagination */}
       </div>
