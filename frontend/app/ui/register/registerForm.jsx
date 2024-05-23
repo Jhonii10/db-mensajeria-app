@@ -2,7 +2,8 @@ import { ArrowRightIcon, AtSymbolIcon, KeyIcon } from '@heroicons/react/24/outli
 import { Quicksand } from 'next/font/google';
 import Link from 'next/link';
 import React from 'react';
-import Button from '../login/button';
+import Button from '../components/button';
+
 const quicksand = Quicksand({ subsets: ["latin"] });
 
 function RegisterButton() {
