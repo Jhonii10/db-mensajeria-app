@@ -1,4 +1,5 @@
 import Card from '@/app/ui/dashboard/card';
+import LatestService from '@/app/ui/dashboard/latestService';
 import RevenueChart from '@/app/ui/dashboard/revenueChart';
 import { Quicksand } from 'next/font/google';
 
@@ -13,7 +14,7 @@ export default async function Page() {
         Panel
       </h1>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 ">
-      <Card title="Entregados" value={124} type="delivery" /> 
+        <Card title="Entregados" value={124} type="delivery" /> 
         <Card title="Pendientes" value={10} type="pending" /> 
         <Card title="Total Servicios" value={134} type="service" /> 
         <Card
@@ -23,8 +24,8 @@ export default async function Page() {
         /> 
       </div>
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8 ">
-       {/* todo */}
        <RevenueChart/>
+       <LatestService/>
       </div>
     </main>
   );

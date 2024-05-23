@@ -74,7 +74,7 @@ const RevenueChart = () => {
       <h2 className={`${quicksand.className} mb-4 text-xl md:text-2xl`}>
         Estadisticas de los servicios 
       </h2>
-      <div className="rounded-xl bg-gray-50 p-4">
+      <div className="rounded-xl bg-gray-100 p-4">
         
          {
             !array || array.length >= 1
