@@ -6,12 +6,13 @@ import {
     KeyIcon,
     ArrowRightIcon,
   } from '@heroicons/react/24/outline';
-import Button from './button';
+
 import Link from 'next/link';
 import UseAuthStore from '@/app/hooks/useAuthStore';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
+import Button from '../components/button';
 
 const quicksand = Quicksand({ subsets: ["latin"] });
 
