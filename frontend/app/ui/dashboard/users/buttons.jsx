@@ -1,4 +1,4 @@
-import { PlusIcon } from '@heroicons/react/24/outline'
+import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import React from 'react'
 
@@ -12,4 +12,27 @@ export default function CreateUser() {
       <PlusIcon className="h-5 md:ml-4" />
     </Link>
   )
+}
+
+
+export function UpdateUser({ id }) {
+    return (
+      <Link
+        href={`/dashboard/users#/edit/${id}`}
+        className="rounded-md border p-2 hover:bg-green-100 text-green-600"
+      >
+        <PencilIcon className="w-5" />
+      </Link>
+    );
+  }
+  
+
+  export function DeleteUser({ id }) {
+          
+  return (   
+        <button className="rounded-md border p-2 hover:bg-red-100 text-red-600" >
+            <span className="sr-only">Delete</span>
+            <TrashIcon className="w-5" />
+        </button> 
+  );
 }
