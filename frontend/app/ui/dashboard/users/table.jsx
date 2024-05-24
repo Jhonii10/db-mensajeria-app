@@ -1,22 +1,27 @@
 import React from 'react';
 import { DeleteUser, UpdateUser } from './buttons';
+import { FaceFrownIcon } from '@heroicons/react/24/outline';
 
 
 
-const Table = () => {
-    const users = [
-       
-        {
-            "id": 2,
-            "name": "nathalia",
-            "contraseña": "$2b$10$OTz5HILRF27nWUm7qbYTyOU6fm0wLrH0MkM3K0P5CyXHiOFTLnVOm",
-            "email": "nathalia10@gmail.com",
-            "celular": "313432453",
-            "direccion": "cra 16 #10-140",
-            "rolle": "cliente"
-        },
-        
-    ];
+const Table = ({query,currentPage}) => {
+    
+    const users = [];
+
+    if (!users || users.length == 0) {
+        return(
+            <div className="mt-6 flow-root"> 
+            <div className="inline-block min-w-full align-middle">
+        <div className="rounded-lg  p-2 md:pt-0 ">
+         <div className='flex justify-center items-center gap-2' style={{height: 'calc(100vh - 280px)'}}>
+         <h2 className="text-xl font-semibold">No se encontraron datos </h2>
+         <FaceFrownIcon className="w-10 text-gray-400" />
+         </div>
+        </div>
+        </div>
+        </div>
+        )
+    }
     return (
         <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
@@ -39,10 +44,7 @@ const Table = () => {
                
                 <div className="flex w-full items-center justify-between pt-4">
                   <div>
-                    <p className="text-xl font-medium">
-                      {'Fechas'}
-                    </p>
-                    <p>{'23-05-2024'}</p>
+                    <p>{user.rolle}</p>
                   </div>
                   <div className="flex justify-end gap-2">
                     <UpdateUser id={user.id} />
