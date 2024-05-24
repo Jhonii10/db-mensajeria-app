@@ -4,7 +4,11 @@ import Table from '@/app/ui/dashboard/users/table'
 import { quicksand } from '@/app/ui/font/quicksand'
 import React from 'react'
 
-export default function Page() {
+export default function Page({searchParams}) {
+
+    const query = searchParams?.query || '';
+    const currentPage = Number(searchParams?.page) || 1;
+
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
@@ -14,7 +18,7 @@ export default function Page() {
         <Search placeholder={'Buscar usuario...'}/>
         <CreateUser/>
       </div>
-       <Table/>
+       <Table query={query} currentPage={currentPage}/>
       <div className="mt-5 flex w-full justify-center">
         {/* pagination */}
       </div>
