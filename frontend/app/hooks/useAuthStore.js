@@ -18,7 +18,6 @@ import Cookies from 'js-cookie';
             try {
                 
                 const {data} = await mensajeríaApi.post('/auth/login',{login:username,password:contraseña})
-                console.log('here',data);
                 localStorage.setItem('token',data.token)
                 Cookies.set ( 'token' , data.token )
                 localStorage.setItem('token-init-date',new Date().getTime())
@@ -37,6 +36,26 @@ import Cookies from 'js-cookie';
         
         }
 
+        const startRegister = async({Name,Email,Login,Password,Rol,Address,Cell_phone})=>{;
+    
+             try {
+                
+                const {data} = await mensajeríaApi.post('/auth/register',{Name, Email, Login, Password, Rol, Address, Cell_phone})
+                if (data) {
+                    router.push('/login')
+                    toast.success('¡Registro exitoso!'); 
+                } 
+                
+             } catch (error) {
+                console.log(error);
+                dispatch(onLogout(error.response.data?.msg || ''))
+                setTimeout(() => {
+                    dispatch(clearErrorMessage())
+                }, 100);
+    
+             }
+        }
+
         const startLogout = ()=>{
             localStorage.clear();
             Cookies.remove('token')
@@ -52,7 +71,8 @@ import Cookies from 'js-cookie';
 
             // metodos
             startLogin,
-            startLogout
+            startLogout,
+            startRegister
         };
     }
 
