@@ -7,7 +7,7 @@ export default function RegisterPage() {
 
 
     return (
-      <main className="flex items-center justify-center md:h-screen ">
+      <main className="flex items-center justify-center ">
         
         <div className="relative mx-auto flex w-full max-w-[500px] flex-col space-y-2.5 p-4   ">
                <Link  href="/" className='block w-10' >
