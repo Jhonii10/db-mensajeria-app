@@ -3,8 +3,7 @@ const { generarJWT } = require("../helpers/jwt");
 const
 { 
   findUserByEmail, 
-  createUser, 
-  getUserbyEmail,
+  createUser,
   comparePasswords,
   allUsers,
   getUserbyEmailOrUserName
@@ -12,21 +11,31 @@ const
 
 
 const register = async (req, res, next)=>{
-    const {id_usuario, username, contraseña, email, celular, direccion, id_cliente,nombre} = req.body;
+    const {Name, Email ,Login , Password ,Rol, Address ,Cell_phone} = req.body;
 
-    if (!id_usuario || !username || !contraseña || !email || !celular || !direccion || !id_cliente || !nombre ) {
+    if (!Name || !Email || !Login || !Password || !Rol || !Address || !Cell_phone) {
         return res.status(400).send('Faltan campos');
       }
   
       try {
-        const userExists = await findUserByEmail(email);
-        console.log(userExists);
+        const userExists = await findUserByEmail(Email);
         if (userExists) {
           return res.status(400).send('El usuario ya está registrado');
         }
   
-        const result = await createUser(id_usuario, username, contraseña, email, celular, direccion, id_cliente,nombre);
-        res.status(201).json(result);
+        const result = await createUser(Name, Email ,Login , Password ,Rol, Address ,Cell_phone);
+        if (result) {
+          res.status(201).json({
+            status: true,
+            user: {
+              name:Name,
+              email:Email,
+              rol:Rol,
+            },
+            
+          });
+        }
+        
       } catch (error) {
         console.error('Error registering user:', error);
         res.status(500).send('Hubo un error intentando crear el usuario');
@@ -35,44 +44,46 @@ const register = async (req, res, next)=>{
 
 
 const login = async (req , res , next)=>{
-    const {username, contraseña} = req.body;
+    const {login, password} = req.body;
 
-    if (!username || !contraseña) {
+    if (!login || !password) {
         return res.status(400).json({ message: 'Por favor ingresa tu usuario y contraseña' });
     }
 
    
     try {
 
-        const user = await getUserbyEmailOrUserName(username);  
+        const user = await getUserbyEmailOrUserName(login);  
         
         if (!user) {
             return res.status(401).json({ message: 'Nombre de usuario o contraseña incorrectos', status: false });
           }
 
-        const validPassword = await comparePasswords(contraseña, user.contraseña);
+        const validPassword = await comparePasswords(password, user.password);
 
 
         if (!validPassword) {
             return res.status(401).json({ message: 'Contraseña incorrecta', status: false });
           }
 
-          const token = await generarJWT(user.id_usuario , user.email)
+          const token = await generarJWT(user.id_user , user.Email)
 
           res.json({
             status: true,
             user: {
-              id: user.id_usuario,
-              username: user.username,
+              id: user.id_user,
+              login: user.login,
               email: user.email,
+              roll: user.rol,
+              token
             },
-            token,
+            
           });
     
         
     } catch (error) {
         console.error('Error autenticando al usuario:', error);
-      res.status(500).json({ message: 'Hubo un error al autenticar al usuario' })
+        res.status(500).json({ message: 'Hubo un error al autenticar al usuario' })
     }
 }
 
