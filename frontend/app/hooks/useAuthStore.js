@@ -14,10 +14,11 @@ import Cookies from 'js-cookie';
         
     
         const startLogin = async({username , contraseña})=>{
-
+                    
             try {
                 
-                const {data} = await mensajeríaApi.post('/auth/login',{username,contraseña})
+                const {data} = await mensajeríaApi.post('/auth/login',{login:username,password:contraseña})
+                console.log('here',data);
                 localStorage.setItem('token',data.token)
                 Cookies.set ( 'token' , data.token )
                 localStorage.setItem('token-init-date',new Date().getTime())

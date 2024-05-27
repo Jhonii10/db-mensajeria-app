@@ -2,26 +2,26 @@ const bcrypt = require('bcrypt');
 const pool = require('../database/config');
 const { generarJWT } = require('../helpers/jwt');
 
-const createUser =async (id_usuario, username, contraseña, email, celular, direccion, id_cliente,nombre)=>{
+const createUser =async (Name, Email ,Login , Password ,Rol, Address ,Cell_phone)=>{
 
-    const hashedPassword = await bcrypt.hash(contraseña, 10);
+    const hashedPassword = await bcrypt.hash(Password, 10);
 
     try {
       await pool.query(
-        `INSERT INTO usuario (id_usuario, username, contraseña, email, celular, direccion, id_cliente,nombre) 
-         VALUES ($1, $2, $3, $4, $5, $6, $7,$8)`,
-        [id_usuario, username, hashedPassword, email, celular, direccion, id_cliente,nombre ]
+        `INSERT INTO users (Name, Email ,Login , Password ,Rol, Address ,Cell_phone) 
+         VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+        [Name, Email ,Login , hashedPassword ,Rol, Address ,Cell_phone ]
       );
 
-     const token = await generarJWT(id_usuario , username)
+     const token = await generarJWT(Email , Login)
 
       return { 
         success: true,
         message: 'Usuario creado correctamente',
         user:{
-            id_usuario,
-            username,
-            email,
+            Name,
+            Login,
+            Email,
         },
         token
       };
@@ -33,15 +33,15 @@ const createUser =async (id_usuario, username, contraseña, email, celular, dire
 }
 
 const findUserByEmail = async (email)=>{
-    const userExists = await pool.query(`SELECT * FROM usuario WHERE email = $1`, [
+    const userExists = await pool.query(`SELECT * FROM users WHERE email = $1`, [
         email,
       ]);
       return userExists.rows.length > 0;
 }
 
-const getUserbyEmailOrUserName = async(username)=>{
+const getUserbyEmailOrUserName = async(login)=>{
     try {
-        const user = await pool.query('SELECT * FROM usuario WHERE email = $1 or username = $1', [username]);
+        const user = await pool.query('SELECT * FROM users WHERE Email = $1 or Login = $1', [login]);
         return user.rows[0];
       } catch (error) {
         console.error('Error fetching user:', error);
@@ -55,7 +55,7 @@ const comparePasswords = async (password , hashedPassword)=>{
 
 const allUsers = async()=>{
   try {
-      const result = await pool.query('SELECT * FROM usuario');
+      const result = await pool.query('SELECT * FROM users');
       const data = result.rows;
       return data
   } catch (error) {

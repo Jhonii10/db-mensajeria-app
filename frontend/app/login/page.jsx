@@ -12,7 +12,7 @@ export default function LoginPage() {
       
       <div className="relative mx-auto flex w-full max-w-[400px] flex-col space-y-2.5 p-4   ">
              <Link  href="/" className='block w-10' >
-              <ArrowLeftCircleIcon className="h-10 w-10 text-black" title="Inicio" CD />
+              <ArrowLeftCircleIcon className="h-10 w-10 text-black" title="Inicio"  />
              </Link>
         <div className="flex h-20 w-full items-end rounded-lg bg-black p-3 md:h-24">
             

@@ -6,7 +6,7 @@ CREATE TABLE users (
     Password VARCHAR(255) NOT NULL,
     Rol VARCHAR(50) NOT NULL,
     Address VARCHAR(255),
-    Cell_phone INT,
+    Cell_phone BIGINT,
     CHECK (Rol IN ('Customer', 'Delivery', 'Manager'))
 );
 
