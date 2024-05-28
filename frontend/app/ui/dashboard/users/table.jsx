@@ -1,12 +1,14 @@
 import React from 'react';
 import { DeleteUser, UpdateUser } from './buttons';
 import { FaceFrownIcon } from '@heroicons/react/24/outline';
+import useUserStore from '@/app/hooks/useUserStore';
 
 
+const Table =async ({query,currentPage}) => {
 
-const Table = ({query,currentPage}) => {
-    
-    const users = [];
+    const {fetchUsers} =  useUserStore()
+
+    const users = await fetchUsers();
 
     if (!users || users.length == 0) {
         return(
@@ -29,7 +31,7 @@ const Table = ({query,currentPage}) => {
           <div className="md:hidden">
             {users?.map((user) => (
               <div
-                key={user.id}
+                key={user.id_user}
                 className="mb-2 w-full rounded-md bg-white p-4"
               >
                 <div className="flex items-center justify-between border-b pb-4">
@@ -39,38 +41,38 @@ const Table = ({query,currentPage}) => {
                     </div>
                     <p className="text-sm text-gray-500">{user.email}</p>
                   </div>
-                  <p>estado</p>
+                  <p>{user.cell_phone}</p>
                 </div>
                
                 <div className="flex w-full items-center justify-between pt-4">
                   <div>
-                    <p>{user.rolle}</p>
+                    <p>{user.rol}</p>
                   </div>
                   <div className="flex justify-end gap-2">
-                    <UpdateUser id={user.id} />
-                    <DeleteUser id={user.id} />
+                    <UpdateUser id={user.id_user} />
+                    <DeleteUser id={user.id_user} />
                   </div>
                 </div>
               </div>
             ))}
           </div>
           <table className="hidden min-w-full text-gray-900 md:table">
-            <thead className="rounded-lg text-left text-sm font-normal">
-              <tr>
-                <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
+            <thead className="rounded-lg text-left text-sm font-bold ">
+              <tr className=''>
+                <th scope="col" className="px-4 py-5 font- sm:pl-6">
                   Nombre 
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className="px-3 py-5 font-bold">
                   Correo
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
-                  Role
+                <th scope="col" className="px-3 py-5 font-bold">
+                  Rol
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className="px-3 py-5 font-bold">
                   Telefono
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
-                  Estado
+                <th scope="col" className="px-3 py-5 font-bold">
+                  Direccion
                 </th>
                 <th scope="col" className="relative py-3 pl-6 pr-3">
                   <span className="sr-only">Edit</span>
@@ -80,10 +82,10 @@ const Table = ({query,currentPage}) => {
             <tbody className="bg-white">
               {users?.map((user) => (
                 <tr
-                  key={user.id}
-                  className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
+                  key={user.id_user}
+                  className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg "
                 >
-                  <td className="whitespace-nowrap py-3 pl-6 pr-3">
+                  <td className="whitespace-nowrap py-3 pl-6 pr-3 ">
                     <div className="flex items-center gap-3">
                       <p>{user.name}</p>
                     </div>
@@ -92,18 +94,18 @@ const Table = ({query,currentPage}) => {
                     {user.email}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {user.rolle}
+                    {user.rol}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {user.celular}
+                    {user.cell_phone}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    estado
+                  {user.address}
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
-                      <UpdateUser id={user.id} />
-                      <DeleteUser id={user.id} />
+                      <UpdateUser id={user.id_user} />
+                      <DeleteUser id={user.id_user} />
                     </div>
                   </td>
                 </tr>
