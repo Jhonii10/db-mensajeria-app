@@ -10,14 +10,14 @@ CREATE TABLE users (
     CHECK (Rol IN ('Customer', 'Delivery', 'Manager'))
 );
 
-CREATE TABLE customer (
+CREATE TABLE customers (
     ID_Customer INT PRIMARY KEY,
     ID_User INT UNIQUE,
     City VARCHAR(100),
     FOREIGN KEY (ID_users) REFERENCES users (ID_users) ON DELETE CASCADE
 );
 
-CREATE TABLE delivery (
+CREATE TABLE deliverys (
 --ID_Number es el cc del mensajero 
     ID_Number INT PRIMARY KEY, 
     ID_User INT NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE delivery (
     FOREIGN KEY (ID_User) REFERENCES users (ID_User) ON DELETE CASCADE
 );
 
-CREATE TABLE branch (
+CREATE TABLE branchs (
     ID_Branch SERIAL PRIMARY KEY,
     Name_Store VARCHAR(100) NOT NULL,
     Address VARCHAR(255),
@@ -34,7 +34,7 @@ CREATE TABLE branch (
     FOREIGN KEY (ID_Customer) REFERENCES customer (ID_Customer) ON DELETE CASCADE
 );
 
-CREATE TABLE service (
+CREATE TABLE services (
     ID_Service SERIAL PRIMARY KEY,
     Service_Code SERIAL UNIQUE,
     Date DATE,
@@ -53,12 +53,12 @@ CREATE TABLE status (
     ID_Status SERIAL PRIMARY KEY,
     Date DATE,
     Type_Status VARCHAR(20),
-    CHECK(Type_Status IN ('Delivery','Picked Up','Required')), 
+    CHECK(Type_Status IN ('Delivered','Pickedup','Required')), 
     ID_Service INT UNIQUE,
     FOREIGN KEY (ID_Service) REFERENCES service (ID_Service) ON DELETE CASCADE
 );
 
-CREATE TABLE photo (
+CREATE TABLE photos (
     ID_Photo SERIAL PRIMARY KEY,
     URL_Images VARCHAR(255),
     Date DATE,

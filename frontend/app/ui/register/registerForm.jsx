@@ -2,7 +2,7 @@
 import { ArrowRightIcon, AtSymbolIcon, KeyIcon } from '@heroicons/react/24/outline';
 import { Quicksand } from 'next/font/google';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../components/button';
 import UseAuthStore from '@/app/hooks/useAuthStore';
 import toast from 'react-hot-toast';
@@ -11,13 +11,9 @@ const quicksand = Quicksand({ subsets: ["latin"] });
 
 
 
-function RegisterButton() {
-
-
-
-
+function RegisterButton({pending}) {
     return (
-      <Button className="mt-4 w-full" >
+      <Button className="mt-4 w-full" pending={pending}>
         Registrarse <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
       </Button>
     );
@@ -26,6 +22,7 @@ function RegisterButton() {
 const RegisterForm = () => {
 
   const {errormessage, startRegister}= UseAuthStore();
+  const [pending, setPending] = useState(false);
 
   const [formData, setFormData] = useState({
     Name: '',
@@ -46,23 +43,39 @@ const RegisterForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log(formData);
+    setPending(true);
     if (formData.Password !== formData.PasswordConfirmation) {
       toast.error('Las contraseñas no coinciden')
+      setPending(false);
       return;
     }
-    startRegister({
-      Name: formData.Name,
-      Email: formData.Email,
-      Login: formData.Login,
-      Password: formData.Password,
-      Rol: formData.Rol,
-      Address: formData.Address,
-      Cell_phone: formData.Cell_phone
-    })
+    
+    try {
+      await startRegister({
+        Name: formData.Name,
+        Email: formData.Email,
+        Login: formData.Login,
+        Password: formData.Password,
+        Rol: formData.Rol,
+        Address: formData.Address,
+        Cell_phone: formData.Cell_phone
+      })
+    } catch (error) {
+      console.error(error)
+    }finally{
+      setPending(false);
+    }
+
+    
   };
+
+  useEffect(() => {
+    if (errormessage !== undefined) {
+       toast.error(errormessage)
+    }
+}, [errormessage]);
 
     return (
         <form onSubmit={handleSubmit} className="space-y-3">
@@ -90,7 +103,7 @@ const RegisterForm = () => {
               htmlFor="username"
               className="block text-sm font-medium text-gray-700"
             >
-              Username
+              Nombre de usuario
             </label>
             <input
               type="text"
@@ -147,8 +160,10 @@ const RegisterForm = () => {
               Telefono{" "}
             </label>
             <input
-              type="tel"
+              type="number"
               name="Cell_phone"
+              min={0}
+              minLength={3}
               value={formData.Cell_phone}
               onChange={handleInputChange}
               className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-2 text-sm outline-2 placeholder:text-gray-500"
@@ -225,7 +240,7 @@ const RegisterForm = () => {
           </div>
           
         </div>
-            <RegisterButton/>
+            <RegisterButton pending={pending}/>
             <p className="text-center text-sm text-gray-600 mt-4">
               {"¿Ya tienes una cuenta?"}
               <Link href="/login" className="font-semibold text-gray-800 ml-1">

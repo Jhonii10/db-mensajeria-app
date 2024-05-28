@@ -55,7 +55,7 @@ const comparePasswords = async (password , hashedPassword)=>{
 
 const allUsers = async()=>{
   try {
-      const result = await pool.query('SELECT * FROM users');
+      const result = await pool.query(`SELECT * FROM users`);
       const data = result.rows;
       return data
   } catch (error) {

@@ -44,11 +44,11 @@ import Cookies from 'js-cookie';
                 if (data) {
                     router.push('/login')
                     toast.success('¡Registro exitoso!'); 
-                } 
+                }    
                 
              } catch (error) {
-                console.log(error);
-                dispatch(onLogout(error.response.data?.msg || ''))
+                console.error(error);
+                dispatch(onLogout(error.response?.data || 'Error al registrar Usuario'))
                 setTimeout(() => {
                     dispatch(clearErrorMessage())
                 }, 100);

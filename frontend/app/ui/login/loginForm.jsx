@@ -17,9 +17,9 @@ import Button from '../components/button';
 const quicksand = Quicksand({ subsets: ["latin"] });
 
 
-function LoginButton() {
+function LoginButton({pending}) {
     return (
-      <Button className="mt-4 w-full" >
+      <Button className="mt-4 w-full" pending={pending} >
         Acceder <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
       </Button>
     );
@@ -28,6 +28,7 @@ function LoginButton() {
 const LoginForm = () => {
 
     const router = useRouter();
+    const [pending, setPending] = useState(false);
 
   useEffect(() => {
     const userToken = Cookies.get('token'); 
@@ -50,10 +51,18 @@ const LoginForm = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit =async (e) => {
+       
         e.preventDefault();
-        startLogin(formData)
-        
+        setPending(true)
+        try {
+          await startLogin(formData);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setPending(false);
+        }
+           
     };
 
 
@@ -114,7 +123,7 @@ const LoginForm = () => {
             </div>
           </div>
         </div>
-          <LoginButton/>
+          <LoginButton pending={pending}/>
           <p className="text-center text-sm text-gray-600 mt-4">
             {"¿No tienes una cuenta?"}
             <Link href="/register" className="font-semibold text-gray-800 ml-1">
