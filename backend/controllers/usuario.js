@@ -6,7 +6,9 @@ const
   createUser,
   comparePasswords,
   allUsers,
-  getUserbyEmailOrUserName
+  getUserbyEmailOrUserName,
+  fetchUserById,
+  updateUser,
 } = require("../models/usuario");
 
 
@@ -112,9 +114,50 @@ const users = async(req, res, next)=>{
 }
 }
 
+const getUserById =async (req, res, next)=>{
+  const userId = req.params.id;
+  try {
+    const user = await fetchUserById(userId);
+      if (!user) {
+        return res.status(404).json({ message: 'Usuario no encontrado' });
+      }
+      res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+
+const editUserById = async (req, res, next)=>{
+  const userId = req.params.id;
+  
+  const { name, email, address, cell_phone } = req.body;
+  try {
+
+    const user = await fetchUserById(userId);
+      if (!user) {
+        return res.status(404).json({ message: 'Usuario no encontrado' });
+      }
+    
+
+      await updateUser(userId, name, email, address, cell_phone);  
+
+      return res.status(200).json({
+        mensaje: `usuario actualizado correctamente`,
+    });
+
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+
 module.exports = {
     register,
     login,
     revalidarToken,
-    users
+    users,
+    editUserById,
+    getUserById
+    
 }
