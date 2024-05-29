@@ -1,4 +1,5 @@
-// aqui insertar datos Insertamos datos en la tabla users
+
+
 INSERT INTO users (Name, Email, Login, Password, Role, Address, Cell_phone) VALUES
 ('John Doe', 'john.doe@gmail.com', 'johndoe', 'password_123', 'Customer', '123 Main St',
 3316746),
