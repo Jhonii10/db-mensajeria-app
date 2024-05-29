@@ -55,7 +55,7 @@ const comparePasswords = async (password , hashedPassword)=>{
 
 const allUsers = async()=>{
   try {
-      const result = await pool.query(`SELECT * FROM users`);
+      const result = await pool.query(`SELECT * FROM users WHERE rol != 'Manager'`);
       const data = result.rows;
       return data
   } catch (error) {
@@ -63,11 +63,31 @@ const allUsers = async()=>{
   }
 }
 
+const fetchUserById =  async (userId) => {
+  try {
+    const result = await pool.query('SELECT * FROM users WHERE ID_User = $1', [userId]);
+    return result.rows[0]
+  } catch (error) {
+    throw new Error(error.message)
+  }
+}
+
+const  updateUser = async (id, name, email, address, cellPhone)=>{
+  const result = await pool.query(
+    'UPDATE users SET Name = $1, Email = $2, Address = $3, Cell_phone = $4 WHERE ID_User = $5 RETURNING *',
+    [name, email, address, cellPhone, id]
+  );
+  return result.rows[0];
+}
+
 module.exports = {
     createUser,
     findUserByEmail,
     getUserbyEmailOrUserName,
-    comparePasswords,
-    allUsers
+    comparePasswords, 
+    allUsers,
+    fetchUserById,
+    updateUser,
+    
 }
 
