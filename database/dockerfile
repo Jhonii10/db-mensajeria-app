@@ -1,1 +1,2 @@
-// crear imagen de docker para postgresql
+# Utilizar la imagen oficial más reciente de PostgreSQL 
+FROM postgres:latest
