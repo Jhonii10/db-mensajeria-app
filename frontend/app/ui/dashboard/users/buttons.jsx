@@ -18,7 +18,7 @@ export default function CreateUser() {
 export function UpdateUser({ id }) {
     return (
       <Link
-        href={`/dashboard/users#/edit/${id}`}
+        href={`/dashboard/users/edit/${id}`}
         className="rounded-md border p-2 hover:bg-green-100 text-green-600"
       >
         <PencilIcon className="w-5" />
