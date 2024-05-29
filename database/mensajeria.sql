@@ -10,14 +10,14 @@ CREATE TABLE users (
     CHECK (Rol IN ('Customer', 'Delivery', 'Manager'))
 );
 
-CREATE TABLE customers (
+CREATE TABLE customer (
     ID_Customer INT PRIMARY KEY,
     ID_User INT UNIQUE,
     City VARCHAR(100),
-    FOREIGN KEY (ID_users) REFERENCES users (ID_users) ON DELETE CASCADE
+    FOREIGN KEY (ID_user) REFERENCES users (ID_user) ON DELETE CASCADE
 );
 
-CREATE TABLE deliverys (
+CREATE TABLE delivery (
 --ID_Number es el cc del mensajero 
     ID_Number INT PRIMARY KEY, 
     ID_User INT NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE deliverys (
     FOREIGN KEY (ID_User) REFERENCES users (ID_User) ON DELETE CASCADE
 );
 
-CREATE TABLE branchs (
+CREATE TABLE branch (
     ID_Branch SERIAL PRIMARY KEY,
     Name_Store VARCHAR(100) NOT NULL,
     Address VARCHAR(255),
@@ -34,7 +34,7 @@ CREATE TABLE branchs (
     FOREIGN KEY (ID_Customer) REFERENCES customer (ID_Customer) ON DELETE CASCADE
 );
 
-CREATE TABLE services (
+CREATE TABLE service (
     ID_Service SERIAL PRIMARY KEY,
     Service_Code SERIAL UNIQUE,
     Date DATE,
@@ -65,4 +65,3 @@ CREATE TABLE photos (
     ID_Service INT,
     FOREIGN KEY (ID_Service) REFERENCES service (ID_Service) ON DELETE CASCADE
 );
-
