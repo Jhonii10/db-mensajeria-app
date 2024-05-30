@@ -4,6 +4,8 @@ import Table from '@/app/ui/dashboard/users/table'
 import { quicksand } from '@/app/ui/font/quicksand'
 import React from 'react'
 
+export const revalidate = 0;
+
 export default function Page({searchParams}) {
 
     const query = searchParams?.query || '';
