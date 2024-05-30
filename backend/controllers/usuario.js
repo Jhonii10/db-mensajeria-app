@@ -9,6 +9,7 @@ const
   getUserbyEmailOrUserName,
   fetchUserById,
   updateUser,
+  removeUser,
 } = require("../models/usuario");
 
 
@@ -151,6 +152,22 @@ const editUserById = async (req, res, next)=>{
   }
 }
 
+const deleteUser = async (req, res) => {
+  
+  const { id } = req.params;
+
+  try {
+    const result = await removeUser(id);
+    res.status(200).json(result);
+  } catch (error) {
+    console.error('Error eliminando el usuario:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Hubo un error intentando eliminar el usuario'
+    });
+  }
+};
+
 
 module.exports = {
     register,
@@ -158,6 +175,7 @@ module.exports = {
     revalidarToken,
     users,
     editUserById,
-    getUserById
+    getUserById,
+    deleteUser
     
 }
