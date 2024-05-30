@@ -80,6 +80,19 @@ const  updateUser = async (id, name, email, address, cellPhone)=>{
   return result.rows[0];
 }
 
+const removeUser = async (userId) => {
+  try {
+    await pool.query('DELETE FROM users WHERE ID_User = $1', [userId]);
+    return {
+      success: true,
+      message: 'Usuario eliminado correctamente'
+    };
+  } catch (error) {
+    console.error('Error eliminando el usuario:', error);
+    throw new Error('Hubo un error intentando eliminar el usuario');
+  }
+}
+
 module.exports = {
     createUser,
     findUserByEmail,
@@ -88,6 +101,6 @@ module.exports = {
     allUsers,
     fetchUserById,
     updateUser,
-    
+    removeUser,
 }
 
