@@ -150,7 +150,7 @@ const EditForm = ({user}) => {
         >
           Cancelar
         </Link>
-        <Button type="submit" pending={pending}>Editar usuario</Button>
+        <Button type="submit" pending={pending}>Guardar cambios</Button>
       </div>
     </form>
     );

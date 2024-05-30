@@ -49,12 +49,36 @@ import actionUsers from '../lib/action';
         
       }
 
+      async function updateUser(id,form) {
+        noStore()
+        try {
+            await mensajeríaApi.put(`/auth/edit/${id}`, form);
+            actionUsers("/dashboard/users")
+            } catch (error) {
+            return { message: 'Database Error: Failed to Update Invoice.' };
+            }
+            
+        
+      }
+
+      async function deleteUser(id) {
+        noStore()
+        try {
+            await mensajeríaApi.delete(`/auth/delete/${id}`);
+            actionUsers("/dashboard/users")
+            } catch (error) {
+            return { message: 'Database Error: Failed to Update Invoice.' };
+            }   
+        
+      }
+
 
     return{
         // metodos y propiedades
         fetchUsers,
         fetchUsersById,
-        updateUser
+        updateUser,
+        deleteUser
     }
 }
 

@@ -1,6 +1,10 @@
+'use client'
+import useUserStore from '@/app/hooks/useUserStore'
 import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
+import Notiflix from 'notiflix'
 import React from 'react'
+import toast from 'react-hot-toast'
 
 export default function CreateUser() {
   return (
@@ -28,9 +32,36 @@ export function UpdateUser({ id }) {
   
 
   export function DeleteUser({ id }) {
+
+    const {deleteUser}=useUserStore()
+
+    const confirmDelete = async()=>{
+        Notiflix.Confirm.show(
+            'Eliminar usuario',
+            '¿Estas seguro de eliminar este usuario?',
+            'Eliminar',
+            'Cancelar',
+            async function okCb() {
+                await deleteUser(id);
+                toast.success('Usuario eliminado')
+            },
+            function cancelCb() {
+              return
+            },
+            {
+              width: '320px',
+              borderRadius: '8px',
+              titleColor:'black',
+              okButtonBackground:'red',
+              cssAnimationStyle:'zoom',
+      
+            },
+          );
+      }
+      
           
   return (   
-        <button className="rounded-md border p-2 hover:bg-red-100 text-red-600" >
+        <button onClick={confirmDelete} className="rounded-md border p-2 hover:bg-red-100 text-red-600" >
             <span className="sr-only">Delete</span>
             <TrashIcon className="w-5" />
         </button> 
