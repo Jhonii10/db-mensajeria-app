@@ -7,12 +7,11 @@ import actionUsers from '../lib/action';
 
      async function fetchUsers(query , currentPage) {
         noStore()
-        
+        const form = {query,currentPage}
         try {
-        const {data} = await mensajeríaApi.get(`/auth/users`);
+        const {data} = await mensajeríaApi.post(`/auth/users`, form);
          return data;
         } catch (error) {
-          return []
           console.error('Database Error:', error);
           throw new Error('No se pudieron recuperar los datos.');
         }

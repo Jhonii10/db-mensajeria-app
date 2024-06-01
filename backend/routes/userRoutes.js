@@ -4,7 +4,7 @@ const { register, login, users, editUserById, getUserById, deleteUser } = requir
 
 const router = require('express').Router();
 
-router.get('/users',users );
+router.post('/users',users );
 router.get('/edit/:id', getUserById );
 router.post('/register', register);
 router.post('/login', login);
