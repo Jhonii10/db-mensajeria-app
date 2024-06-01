@@ -62,10 +62,19 @@ const allUsers = async(query , currentPage)=>{
       users.id_user,
       users.name,
       users.email,
+      users.rol,
       users.address,
       users.cell_phone
       FROM users
-      WHERE LOWER(users.name) LIKE LOWER($1)
+      WHERE 
+        (
+          LOWER(users.name) LIKE LOWER($1) 
+          OR LOWER(users.email) LIKE LOWER($1)
+          OR LOWER(users.rol) LIKE LOWER($1)
+          OR LOWER(users.address) LIKE LOWER($1)
+          OR users.cell_phone::text LIKE $1
+        )
+        AND users.rol != 'Manager'
       ORDER BY users.id_user DESC
       LIMIT $2 OFFSET $3`,['%' + query + '%', ITEMS_PER_PAGE, offset]);
       const data = result.rows;
