@@ -53,9 +53,21 @@ const comparePasswords = async (password , hashedPassword)=>{
     return await bcrypt.compare(password, hashedPassword);
 }
 
-const allUsers = async()=>{
+const ITEMS_PER_PAGE = 8;
+const allUsers = async(query , currentPage)=>{
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
   try {
-      const result = await pool.query(`SELECT * FROM users WHERE rol != 'Manager'`);
+      const result = await pool.query(` 
+      SELECT
+      users.id_user,
+      users.name,
+      users.email,
+      users.address,
+      users.cell_phone
+      FROM users
+      WHERE LOWER(users.name) LIKE LOWER($1)
+      ORDER BY users.id_user DESC
+      LIMIT $2 OFFSET $3`,['%' + query + '%', ITEMS_PER_PAGE, offset]);
       const data = result.rows;
       return data
   } catch (error) {

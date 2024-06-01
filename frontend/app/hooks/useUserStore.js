@@ -1,21 +1,18 @@
 
 import mensajeríaApi from '../api/mensajeriaApi';
-import { unstable_noStore as noStore, revalidatePath } from 'next/cache';
+import { unstable_noStore as noStore } from 'next/cache';
 import actionUsers from '../lib/action';
 
  const useUserStore = ()=>{
 
-     async function fetchUsers() {
-
+     async function fetchUsers(query , currentPage) {
         noStore()
         
         try {
-        
-         await new Promise((resolve) => setTimeout(resolve, 3000));
-      
-         const {data} = await mensajeríaApi.get('/auth/users');
+        const {data} = await mensajeríaApi.get(`/auth/users`);
          return data;
         } catch (error) {
+          return []
           console.error('Database Error:', error);
           throw new Error('No se pudieron recuperar los datos.');
         }
@@ -49,18 +46,7 @@ import actionUsers from '../lib/action';
         
       }
 
-      async function updateUser(id,form) {
-        noStore()
-        try {
-            await mensajeríaApi.put(`/auth/edit/${id}`, form);
-            actionUsers("/dashboard/users")
-            } catch (error) {
-            return { message: 'Database Error: Failed to Update Invoice.' };
-            }
-            
-        
-      }
-
+      
       async function deleteUser(id) {
         noStore()
         try {

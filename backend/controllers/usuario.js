@@ -106,8 +106,11 @@ const revalidarToken = async (req, res = response ) => {
 }
 
 const users = async(req, res, next)=>{
+
+  const { query, currentPage } = req.body;
+
   try {
-    const listBranchs = await allUsers();
+    const listBranchs = await allUsers(query, currentPage);
     res.status(200).json(listBranchs)
 } catch (error) {
     console.error("Error al obtener los usuario:", error);
@@ -153,7 +156,7 @@ const editUserById = async (req, res, next)=>{
 }
 
 const deleteUser = async (req, res) => {
-  
+
   const { id } = req.params;
 
   try {
