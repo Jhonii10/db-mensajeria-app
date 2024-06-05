@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 const { default: axios } = require("axios");
 
 const mensajeríaApi = axios.create({
@@ -5,11 +7,10 @@ const mensajeríaApi = axios.create({
 })
 
 
-// TODO configurar interceptores
 mensajeríaApi.interceptors.request.use(config =>{
     config.headers = {
         ...config.headers,
-        //  'x-token':localStorage.getItem('token')
+         'x-token':Cookies.get('token')
     }
     return config;
 })
