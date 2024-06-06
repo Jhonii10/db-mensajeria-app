@@ -2,7 +2,7 @@ const pool = require("../database/config")
 
 const allBranch =async ()=>{
        try {
-        const result = await pool.query('SELECT * FROM sucursal');
+        const result = await pool.query('SELECT * FROM branch');
         const data = result.rows;
         return data;
        } catch (error) {
