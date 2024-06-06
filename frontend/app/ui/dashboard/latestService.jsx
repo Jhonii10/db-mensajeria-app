@@ -6,11 +6,11 @@ import { ArrowPathIcon } from '@heroicons/react/24/outline';
 const LatestService = ({latestService = []}) => {
     return (
         <div className="flex w-full flex-col md:col-span-4">
-      <h2 className={`${quicksand.className} mb-4 text-xl md:text-2xl`}>
+      <h2 className={`${quicksand.className} mb-4 text-xl md:text-2xl font-semibold`}>
         Ultimos servicios
       </h2>
       <div className="flex grow flex-col justify-between rounded-xl bg-gray-100 p-4">
-        {/* NOTE: comment in this code when you get to this point in the course */}
+        
         {
             !latestService || latestService.length >= 1 
             ? <div className="bg-white px-6">

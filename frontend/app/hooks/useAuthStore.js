@@ -18,9 +18,7 @@ import Cookies from 'js-cookie';
             try {
                 
                 const {data} = await mensajeríaApi.post('/auth/login',{login:username,password:contraseña})
-                localStorage.setItem('token',data.token)
-                Cookies.set ( 'token' , data.token )
-                localStorage.setItem('token-init-date',new Date().getTime())
+                Cookies.set('token' , data.user.token )
                 dispatch(onLogin({name: data.user.username , uid: data.user.id}))
                 router.push('/dashboard')
                 toast.success('¡Inicio de sesión exitoso!');
@@ -57,7 +55,6 @@ import Cookies from 'js-cookie';
         }
 
         const startLogout = ()=>{
-            localStorage.clear();
             Cookies.remove('token')
             router.push('/')
             dispatch(onLogout())

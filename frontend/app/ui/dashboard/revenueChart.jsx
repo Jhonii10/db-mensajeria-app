@@ -71,7 +71,7 @@ const RevenueChart = () => {
 
     return (
         <div className="w-full md:col-span-4">
-      <h2 className={`${quicksand.className} mb-4 text-xl md:text-2xl`}>
+      <h2 className={`${quicksand.className} mb-4 text-xl md:text-2xl font-semibold`}>
         Estadisticas de los servicios 
       </h2>
       <div className="rounded-xl bg-gray-100 p-4">
