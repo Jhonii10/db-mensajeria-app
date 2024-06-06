@@ -9,8 +9,6 @@ const Table =async ({query,currentPage}) => {
     const {fetchUsers} =  useUserStore()
 
     const users = await fetchUsers(query,currentPage) ?? [];
-    
-    console.log(users);
 
     if (!users || users.length == 0) {
         return(
