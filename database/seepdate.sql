@@ -1,4 +1,4 @@
-INSERT INTO users (Name, Email, Login, Password, Role, Address, Cell_phone) VALUES
+INSERT INTO users (Name, Email, Login, Password, Rol, Address, Cell_phone) VALUES
 ('John Doe', 'john.doe@gmail.com', 'johndoe', 'password_123', 'Customer', '123 Main St',
 3316746),
 ('Jane Smith', 'jane.smith@hotmail.com', 'janesmith', 'password_456*', 'Delivery', '456 Elm St',
