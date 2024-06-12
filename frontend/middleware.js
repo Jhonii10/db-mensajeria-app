@@ -1,20 +1,21 @@
-import { NextResponse } from 'next/server'
+  import { NextResponse } from 'next/server'
 
-export function middleware(request) {
+  export function middleware(request) {
+    
+    const userToken = request.cookies.get ( 'token' )?.value;
+    
+    
+    // If the user is authenticated, continue as normal
+    if (userToken) {
+      return NextResponse.next()
+    }
   
-  const userToken = request.cookies.get ( 'token' )?.value;
-  
-  // If the user is authenticated, continue as normal
-  if (userToken) {
-    return NextResponse.next()
+    // Redirect to login page if not authenticated
+    return NextResponse.redirect(new URL('/login', request.url))
   }
- 
-  // Redirect to login page if not authenticated
-  return NextResponse.redirect(new URL('/login', request.url))
-}
- 
-export const config = {
-  matcher: '/dashboard/:path*'
+  
+  export const config = {
+    matcher: '/dashboard/:path*'
 
 
-}
+  }
