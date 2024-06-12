@@ -12,13 +12,12 @@ CREATE TABLE users (
 
 CREATE TABLE customer (
     ID_Customer INT PRIMARY KEY,
-    ID_User INT UNIQUE,
+    ID_User INT NOT NULL,
     City VARCHAR(100),
     FOREIGN KEY (ID_user) REFERENCES users (ID_user) ON DELETE CASCADE
 );
 
 CREATE TABLE delivery (
---ID_Number es el cc del mensajero 
     ID_Number INT PRIMARY KEY, 
     ID_User INT NOT NULL,
     ID_Delivery VARCHAR(50) NOT NULL,

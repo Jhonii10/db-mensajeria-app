@@ -18,7 +18,6 @@ export default function Page({searchParams}) {
       </div>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
         <Search placeholder={'Buscar usuario...'}/>
-        <CreateUser/>
       </div>
        <Table query={query} currentPage={currentPage}/>
       <div className="mt-5 flex w-full justify-center">

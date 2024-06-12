@@ -13,12 +13,12 @@ export default async function Page() {
         Panel
       </h1>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 ">
-        <Card title="Entregados" value={124} type="delivery" /> 
-        <Card title="Pendientes" value={10} type="pending" /> 
-        <Card title="Total Servicios" value={134} type="service" /> 
+        <Card title="Entregados" value={0} type="delivery" /> 
+        <Card title="Pendientes" value={0} type="pending" /> 
+        <Card title="Total Servicios" value={0} type="service" /> 
         <Card
           title="Total Usuarios"
-          value={100}
+          value={0}
           type="users"
         /> 
       </div>
