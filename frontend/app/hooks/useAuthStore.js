@@ -19,7 +19,8 @@ import Cookies from 'js-cookie';
                 
                 const {data} = await mensajeríaApi.post('/auth/login',{login:username,password:contraseña})
                 Cookies.set('token' , data.user.token )
-                dispatch(onLogin({name: data.user.username , uid: data.user.id}))
+                Cookies.set('data', data.user.roll)
+                dispatch(onLogin({name: data.user.login , uid: data.user.id , roll:data.user.roll}))
                 router.push('/dashboard')
                 toast.success('¡Inicio de sesión exitoso!');
             } catch (error) {
@@ -56,6 +57,7 @@ import Cookies from 'js-cookie';
 
         const startLogout = ()=>{
             Cookies.remove('token')
+            Cookies.remove('data')
             router.push('/')
             dispatch(onLogout())
         }
