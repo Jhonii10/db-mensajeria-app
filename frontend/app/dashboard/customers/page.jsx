@@ -10,8 +10,8 @@ export default async function Page({searchParams}) {
 
   return (
     <main>
-      <h1 className={`${quicksand.className} mb-8 text-xl md:text-2xl font-bold`}>
-          Clientes
+       <h1 className={`${quicksand.className} mb-8 text-xl md:text-2xl font-bold`}>
+        Clientes
       </h1>
       <CustomersTable customers={customers} />
     </main>

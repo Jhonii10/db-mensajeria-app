@@ -3,7 +3,7 @@ const pool = require("../database/config")
 
 const allCustomer = async()=>{
     try {
-        const result = await pool.query(`SELECT * from customer`);
+        const result = await pool.query(`SELECT * FROM customer`);
         const data = result.rows;
         return data
     } catch (error) {
