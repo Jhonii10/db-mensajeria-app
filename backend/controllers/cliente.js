@@ -29,8 +29,9 @@ const createCustomer = async (req, res, next)=>{
 }
 
 const customer =async (req,res,next)=>{
+    const { query } = req.query; 
     try {
-        const clients = await allCustomer()
+        const clients = await allCustomer(query)
         return res.json(clients);
     } catch (error) {
         console.error("Error al obtener los clientes:", error);

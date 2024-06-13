@@ -23,7 +23,7 @@ export default async function CustomersTable({customers=[]}) {
   return (
     <div className="w-full">
       
-      <Search placeholder="Buscar cliente..." />
+      
       <div className="mt-6 flow-root">
         <div className="overflow-x-auto">
           <div className="inline-block min-w-full align-middle">
@@ -49,7 +49,7 @@ export default async function CustomersTable({customers=[]}) {
                     <div className="flex w-full items-center justify-between border-b py-5">
                       <div className="flex w-1/2 flex-col">
                         <p className="text-xs">Pending</p>
-                        <p className="font-medium">{customer.total_pending}</p>
+                        <p className="font-medium">{customer.total_services}</p>
                       </div>
                       <div className="flex w-1/2 flex-col">
                         <p className="text-xs">Paid</p>
@@ -65,19 +65,22 @@ export default async function CustomersTable({customers=[]}) {
               <table className="hidden min-w-full rounded-md text-gray-900 md:table">
                 <thead className="rounded-md bg-gray-50 text-left text-sm font-normal">
                   <tr>
-                    <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
+                    <th scope="col" className="px-4 py-5 font-bold sm:pl-6">
                       Nombre
                     </th>
-                    <th scope="col" className="px-3 py-5 font-medium">
+                    <th scope="col" className="px-3 py-5 font-bold">
                       Correo
                     </th>
-                    <th scope="col" className="px-3 py-5 font-medium">
+                    <th scope="col" className="px-3 py-5 font-bold text-center">
                       Total Servicios
                     </th>
-                    <th scope="col" className="px-3 py-5 font-medium">
+                    <th scope="col" className="px-3 py-5 font-bold text-center">
                       Total Pendientes
                     </th>
-                    <th scope="col" className="px-4 py-5 font-medium">
+                    <th scope="col" className="px-4 py-5 font-bold text-center">
+                      Total Recogidos
+                    </th>
+                    <th scope="col" className="px-4 py-5 font-bold text-center">
                       Total Entregados
                     </th>
                   </tr>
@@ -94,14 +97,17 @@ export default async function CustomersTable({customers=[]}) {
                       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
                         {customer.email}
                       </td>
-                      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
-                        {customer.total_service}
+                      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm text-center">
+                        {customer.total_services}
                       </td>
-                      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
-                        {customer.total_pending}
+                      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm text-center">
+                        {customer.total_required}
                       </td>
-                      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm group-first-of-type:rounded-md group-last-of-type:rounded-md">
-                        {customer.total_delivery}
+                      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm text-center">
+                        {customer.total_pickedup}
+                      </td>
+                      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm group-first-of-type:rounded-md group-last-of-type:rounded-md text-center">
+                        {customer.total_delivered}
                       </td>
                     </tr>
                   ))}
