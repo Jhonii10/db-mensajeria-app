@@ -1,9 +1,7 @@
-FROM postgres:13
+FROM postgres:latest
 
-ENV POSTGRES_DB = mensajeria
-ENV POSTGRES_USER=admin@admin.com
-ENV POSTGRES_PASSWORD=pg123
+COPY *.sql /docker-entrypoint-initdb.d/
+
+EXPOSE 5432
 
 
-COPY mensajeria.sql /docker-entrypoint-mensajeria.d/
-COPY seepdate.sql /docker-entrypoint-mensajeria.d/

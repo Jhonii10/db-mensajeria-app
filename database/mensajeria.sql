@@ -28,7 +28,7 @@ CREATE TABLE branch (
     ID_Branch SERIAL PRIMARY KEY,
     Name_Store VARCHAR(100) NOT NULL,
     Address VARCHAR(255),
-    Cell_phone INT,
+    Cell_phone BIGINT,
     ID_Customer INT,
     FOREIGN KEY (ID_Customer) REFERENCES customer (ID_Customer) ON DELETE CASCADE
 );
