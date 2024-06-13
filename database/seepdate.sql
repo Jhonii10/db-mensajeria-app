@@ -1,12 +1,4 @@
-CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
--- Ejemplo de inserción de usuarios con contraseñas cifradas usando pgcrypto
-INSERT INTO users (Name, Email, Login, Password, Rol, Address, Cell_phone) VALUES
-('John Doe', 'john@gmail.com', 'johndoe10', crypt('123456', gen_salt('bf')), 'Customer', '123 Maple Street', 1234567890),
-('Jane Smith', 'jane@gmail.com', 'janesmith10', crypt('123456', gen_salt('bf')), 'Delivery', '456 Oak Street', 9876543210),
-('Administrador', 'admin@admin.com', 'admin', crypt('admin123456', gen_salt('bf')), 'Manager', '789 Pine Street', 1122334455);
-
--- Inserting data into customer table
 INSERT INTO customer (ID_Customer, ID_User, City) VALUES
 (1, 1, 'New York'),
 (2, 3, 'Los Angeles'),

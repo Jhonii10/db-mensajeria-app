@@ -14,7 +14,7 @@ CREATE TABLE customer (
     ID_Customer INT PRIMARY KEY,
     ID_User INT NOT NULL,
     City VARCHAR(100),
-    FOREIGN KEY (ID_user) REFERENCES users (ID_user) ON DELETE CASCADE
+    FOREIGN KEY (ID_User) REFERENCES users (ID_User) ON DELETE CASCADE
 );
 
 CREATE TABLE delivery (
