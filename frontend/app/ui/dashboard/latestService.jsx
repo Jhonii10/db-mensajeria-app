@@ -39,7 +39,7 @@ const LatestService = ({latestService = []}) => {
               <p
                 className={`${quicksand.className} truncate text-sm font-medium md:text-base`}
               >
-                {service.amount}
+                {service.city}
               </p>
             </div>
           );

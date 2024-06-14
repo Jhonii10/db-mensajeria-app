@@ -25,6 +25,33 @@ const fetchStatistics = async () => {
     }
 };
 
+const fetchOrderStatuses = async () => {
+    const statusesQuery = `
+        SELECT 
+        type_status 
+        FROM status 
+        WHERE type_status IN ('Delivered','Pickedup','Required')
+    `;
+    
+    const result = await pool.query(statusesQuery);
+    return result.rows;
+};
+
+const fetchLatestService = async () => {
+    const statusesQuery = `
+    SELECT s.ID_Service, s.Date, s.Number_of_Packages, s.City ,u.Name, u.Email 
+    FROM service s
+    LEFT JOIN users u ON s.ID_Customer = u.ID_User
+    ORDER BY s.ID_Service DESC
+    LIMIT 4;
+    `;
+    
+    const result = await pool.query(statusesQuery);
+    return result.rows;
+};
+
 module.exports = {
     fetchStatistics,
+    fetchOrderStatuses,
+    fetchLatestService
 };
