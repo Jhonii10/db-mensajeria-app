@@ -1,3 +1,4 @@
+import useServiciosStore from '@/app/hooks/useServiciosStore';
 import Card from '@/app/ui/dashboard/card';
 import LatestService from '@/app/ui/dashboard/latestService';
 import RevenueChart from '@/app/ui/dashboard/revenueChart';
@@ -7,18 +8,23 @@ const quicksand = Quicksand({ subsets: ["latin"] });
  
 export default async function Page() {
 
+  const {fetchCardData} = await useServiciosStore()
+
+  const {total_services, total_users, total_pending_orders, total_delivered_orders} = await fetchCardData()
+
+
   return (
     <main>
       <h1 className={`${quicksand.className} mb-4 text-xl md:text-2xl font-bold`}>
         Panel
       </h1>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 ">
-        <Card title="Entregados" value={0} type="delivery" /> 
-        <Card title="Pendientes" value={0} type="pending" /> 
-        <Card title="Total Servicios" value={0} type="service" /> 
+        <Card title="Entregados" value={total_delivered_orders ?? 0} type="delivery" /> 
+        <Card title="Pendientes" value={total_pending_orders ?? 0} type="pending" /> 
+        <Card title="Total Servicios" value={total_services ?? 0} type="service" /> 
         <Card
           title="Total Usuarios"
-          value={0}
+          value={total_users ?? 0}
           type="users"
         /> 
       </div>

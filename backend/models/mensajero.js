@@ -9,7 +9,7 @@ const allDelivery = async()=>{
         u.ID_User, 
         u.Name, 
         u.Email, 
-        u.Address, 
+        u.Address,  
         u.Cell_phone, 
         d.ID_Delivery 
         FROM 

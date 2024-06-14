@@ -5,6 +5,7 @@ const cors = require('cors')
 const userRoutes = require("./routes/userRoutes")
 const clientsRoutes = require('./routes/clientsRoutes')
 const mensajeroRoutes = require('./routes/mensajeroRoutes')
+const serviciosRoutes = require('./routes/serviciosRoutes')
 
 // crear apliacion en express
 const app = express();
@@ -19,6 +20,7 @@ app.use(cors())
 app.use('/api/auth', userRoutes)
 app.use('/api/clients',clientsRoutes)
 app.use('/api/delivery',mensajeroRoutes)
+app.use('/api/services',serviciosRoutes)
 
 // Iniciar servidor
 app.listen(process.env.PORT || 3000, ()=>{
