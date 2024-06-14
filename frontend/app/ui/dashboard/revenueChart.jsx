@@ -34,16 +34,16 @@ export const options = {
 
 const quicksand = Quicksand({ subsets: ["latin"] });
 
-const RevenueChart = () => {
+const RevenueChart = ({revenue}) => {
 
-    const array = [];
+    const array = revenue.map(status => status.type_status) ?? [];
 
     
     const getOrderCount = (arr, value) => {
         return arr.filter((n) => n === value).length;
       };
     
-      const [q1, q2, q3] = ['Pendiente', 'Enviado', 'Entregado'];
+      const [q1, q2, q3] = ['Required', 'Pickedup', 'Delivered'];
     
       const placed = getOrderCount(array, q1);
       const shipped = getOrderCount(array, q2);

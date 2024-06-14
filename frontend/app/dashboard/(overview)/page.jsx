@@ -1,4 +1,5 @@
-import useServiciosStore from '@/app/hooks/useServiciosStore';
+import usefetchDataStore from '@/app/hooks/usefetchDataStore';
+import useServiciosStore from '@/app/hooks/usefetchDataStore';
 import Card from '@/app/ui/dashboard/card';
 import LatestService from '@/app/ui/dashboard/latestService';
 import RevenueChart from '@/app/ui/dashboard/revenueChart';
@@ -8,9 +9,12 @@ const quicksand = Quicksand({ subsets: ["latin"] });
  
 export default async function Page() {
 
-  const {fetchCardData} = await useServiciosStore()
+  const {fetchCardData , fetchRevenueData , fetchlatestService} =  usefetchDataStore();
 
-  const {total_services, total_users, total_pending_orders, total_delivered_orders} = await fetchCardData()
+  const {total_services, total_users, total_pending_orders, total_delivered_orders} = await fetchCardData();
+
+  const revenue = await fetchRevenueData();
+  const latestService = await fetchlatestService();
 
 
   return (
@@ -29,8 +33,8 @@ export default async function Page() {
         /> 
       </div>
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8 ">
-       <RevenueChart/>
-       <LatestService/>
+       <RevenueChart revenue={revenue} />
+       <LatestService latestService={latestService}/>
       </div>
     </main>
   );
