@@ -5,6 +5,7 @@ import {
     HomeIcon,
     UsersIcon,
     TruckIcon,
+    IdentificationIcon
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -30,6 +31,12 @@ const links = [
         icon: UserGroupIcon,
         roles: ['Manager']
     },
+    { 
+      name: 'Mensajeros',
+      href: '/dashboard/delivery',
+      icon: IdentificationIcon,
+      roles: ['Manager']
+  },
     { 
         name: 'Servicios',
         href: '/dashboard/services',
