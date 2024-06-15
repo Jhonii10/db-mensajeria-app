@@ -35,19 +35,21 @@ import Cookies from 'js-cookie';
         
         }
 
-        const startRegister = async({Name,Email,Login,Password,Rol,Address,Cell_phone})=>{;
+        const startRegister = async({Name,Email,Login,Password,Rol,Address,Cell_phone,City,ID})=>{;
     
              try {
                 
-                const {data} = await mensajeríaApi.post('/auth/register',{Name, Email, Login, Password, Rol, Address, Cell_phone})
-                if (data) {
-                    router.push('/login')
-                    toast.success('¡Registro exitoso!'); 
-                }    
+                const {data} = await mensajeríaApi.post('/auth/register',{Name, Email, Login, Password, Rol, Address, Cell_phone,City,ID})
+                Cookies.set('token' , data.user.token )
+                Cookies.set('data', data.user.roll)
+                dispatch(onLogin({name: data.user.login , uid: data.user.id , roll:data.user.roll}))
+                router.push('/dashboard')
+                toast.success('¡Registro exitoso!');    
                 
              } catch (error) {
                 console.error(error);
                 dispatch(onLogout(error.response?.data || 'Error al registrar Usuario'))
+                Cookies.remove('token')
                 setTimeout(() => {
                     dispatch(clearErrorMessage())
                 }, 100);

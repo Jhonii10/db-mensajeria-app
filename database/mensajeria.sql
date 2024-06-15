@@ -17,10 +17,10 @@ CREATE TABLE customer (
     FOREIGN KEY (ID_User) REFERENCES users (ID_User) ON DELETE CASCADE
 );
 
-CREATE TABLE delivery (
-    ID_Number INT PRIMARY KEY, 
+CREATE TABLE delivery ( 
+    ID_Delivery INT PRIMARY KEY, 
     ID_User INT NOT NULL,
-    ID_Delivery VARCHAR(50) NOT NULL,
+    City VARCHAR(100),
     FOREIGN KEY (ID_User) REFERENCES users (ID_User) ON DELETE CASCADE
 );
 
