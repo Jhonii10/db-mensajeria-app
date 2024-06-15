@@ -188,8 +188,46 @@ const RegisterForm = () => {
                 <option value="Customer">Cliente</option>
             </select>
           </div>
+           { formData.Rol &&
+          (<>
+          <div className="col-span-6 sm:col-span-3">
+            <label
+              htmlFor="Password"
+              className="block text-sm font-medium text-gray-700"
+            >
+              {" "}
+              Identificacion{" "}
+            </label>
+            <input
+              type="password"
+              name="Password"
+              value={formData.Password}
+              onChange={handleInputChange}
+              className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-2 text-sm outline-2 placeholder:text-gray-500"
+              required
+            />
+          </div>
 
+          <div className="col-span-6 sm:col-span-3">
+            <label
+              htmlFor="Password"
+              className="block text-sm font-medium text-gray-700"
+            >
+              {" "}
+              Cuidad{" "}
+            </label>
+            <input
+              type="password"
+              name="Password"
+              value={formData.Password}
+              onChange={handleInputChange}
+              className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-2 text-sm outline-2 placeholder:text-gray-500"
+              required
+            />
+          </div>
+          </>)
 
+        }
           <div className="col-span-6 sm:col-span-3">
             <label
               htmlFor="Password"
