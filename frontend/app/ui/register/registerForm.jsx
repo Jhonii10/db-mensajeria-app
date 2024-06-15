@@ -32,7 +32,9 @@ const RegisterForm = () => {
     PasswordConfirmation: '',
     Rol: '',
     Address: '',
-    Cell_phone: ''
+    Cell_phone: '',
+    City:'',
+    ID:''
   });
 
   const handleInputChange = (e) => {
@@ -60,7 +62,9 @@ const RegisterForm = () => {
         Password: formData.Password,
         Rol: formData.Rol,
         Address: formData.Address,
-        Cell_phone: formData.Cell_phone
+        Cell_phone: formData.Cell_phone,
+        City: formData.City,
+        ID: formData.ID
       })
     } catch (error) {
       console.error(error)
@@ -199,9 +203,9 @@ const RegisterForm = () => {
               Identificacion{" "}
             </label>
             <input
-              type="password"
-              name="Password"
-              value={formData.Password}
+              type="number"
+              name="ID"
+              value={formData.ID}
               onChange={handleInputChange}
               className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-2 text-sm outline-2 placeholder:text-gray-500"
               required
@@ -217,9 +221,9 @@ const RegisterForm = () => {
               Cuidad{" "}
             </label>
             <input
-              type="password"
-              name="Password"
-              value={formData.Password}
+              type="text"
+              name="City"
+              value={formData.City}
               onChange={handleInputChange}
               className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-2 text-sm outline-2 placeholder:text-gray-500"
               required

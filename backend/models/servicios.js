@@ -39,11 +39,28 @@ const fetchOrderStatuses = async () => {
 
 const fetchLatestService = async () => {
     const statusesQuery = `
-    SELECT s.ID_Service, s.Date, s.Number_of_Packages, s.City ,u.Name, u.Email 
-    FROM service s
-    LEFT JOIN users u ON s.ID_Customer = u.ID_User
-    ORDER BY s.ID_Service DESC
-    LIMIT 4;
+    SELECT
+    s.ID_Service,
+    s.Service_Code,
+    s.Date,
+    s.Origin,
+    s.Destination,
+    s.Number_of_Packages,
+    s.Type_of_Transport,
+    s.Description,
+    s.City,
+    u.Name,
+    u.Email
+    FROM
+        service s
+    JOIN
+        customer c ON s.ID_Customer = c.ID_Customer
+    JOIN
+        users u ON c.ID_User = u.ID_User
+    ORDER BY
+        s.ID_Service DESC
+    LIMIT 5;
+
     `;
     
     const result = await pool.query(statusesQuery);
@@ -54,4 +71,5 @@ module.exports = {
     fetchStatistics,
     fetchOrderStatuses,
     fetchLatestService
+    
 };

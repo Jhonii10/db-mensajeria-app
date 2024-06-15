@@ -14,9 +14,9 @@ const
 
 
 const register = async (req, res, next)=>{
-    const {Name, Email ,Login , Password ,Rol, Address ,Cell_phone} = req.body;
+    const {Name, Email ,Login , Password ,Rol, Address ,Cell_phone , City, ID } = req.body;
 
-    if (!Name || !Email || !Login || !Password || !Rol || !Address || !Cell_phone) {
+    if (!Name || !Email || !Login || !Password || !Rol || !Address || !Cell_phone || !City || !ID ) {
         return res.status(400).send('Faltan campos');
       }
   
@@ -26,14 +26,18 @@ const register = async (req, res, next)=>{
           return res.status(400).send('El usuario ya está registrado');
         }
   
-        const result = await createUser(Name, Email ,Login , Password ,Rol, Address ,Cell_phone);
+        const result = await createUser(Name, Email ,Login , Password ,Rol, Address ,Cell_phone, City, ID );
         if (result) {
+
+          const token = await generarJWT(ID , Email)
+
           res.status(201).json({
             status: true,
             user: {
               name:Name,
               email:Email,
-              rol:Rol,
+              roll:Rol,
+              token
             },
             
           });

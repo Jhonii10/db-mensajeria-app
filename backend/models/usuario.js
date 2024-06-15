@@ -2,16 +2,38 @@ const bcrypt = require('bcrypt');
 const pool = require('../database/config');
 const { generarJWT } = require('../helpers/jwt');
 
-const createUser =async (Name, Email ,Login , Password ,Rol, Address ,Cell_phone)=>{
+const createUser =async (Name, Email ,Login , Password ,Rol, Address ,Cell_phone ,City, ID )=>{
 
     const hashedPassword = await bcrypt.hash(Password, 10);
 
     try {
-      await pool.query(
-        `INSERT INTO users (Name, Email ,Login , Password ,Rol, Address ,Cell_phone) 
-         VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-        [Name, Email ,Login , hashedPassword ,Rol, Address ,Cell_phone ]
+
+      await pool.query('BEGIN');
+      
+      const userResult = await pool.query(
+        `INSERT INTO users (Name, Email, Login, Password, Rol, Address, Cell_phone) 
+         VALUES ($1, $2, $3, $4, $5, $6, $7)
+         RETURNING ID_User`,
+        [Name, Email, Login, hashedPassword, Rol, Address, Cell_phone]
       );
+
+      const userId = userResult.rows[0].id_user;
+
+      if (Rol === 'Customer') {
+        await pool.query(
+          `INSERT INTO customer (ID_Customer, ID_User, City)
+           VALUES ($1, $2, $3)`,
+          [ID, userId, City]
+        );
+      } else if (Rol === 'Delivery') {
+        await pool.query(
+          `INSERT INTO delivery (ID_Delivery, ID_User, City)
+           VALUES ($1, $2, $3)`,
+          [ID, userId, City]
+        );
+      }
+  
+      await pool.query('COMMIT');
 
      const token = await generarJWT(Email , Login)
 
