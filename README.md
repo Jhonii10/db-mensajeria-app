@@ -6,7 +6,7 @@
 
 1. Database : Postgres
 2. Backend : Node.js con Express.js
-3. Frontend : Next.js y redux
+3. Frontend : Next.js, redux y tailwind
 
 ## Ejecutar en local 
 
@@ -34,3 +34,9 @@ npm install
 npm run dev
 ```
 5. Abrir en el navegador [http://localhost:3000](http://localhost:3000)
+
+6. Inicia secion con alguno de estos usuarios.
+
+- administrador: correo: admin@admin.com, contraseña: admin123456
+- cliente: correo: john@gmail.com, contraseña: 123456
+- mensajero: correo: jane@gmail.com, contraseña: 123456
